@@ -32,24 +32,28 @@ export const login = async (req, res) => {
         res.status(500).send("cannot login");
     }
 }
-
 export const addUser = async (req, res) => {
-
     try {
-        let {userName,email,password} = req.body;
+        let { userName, email, password } = req.body;
         let validate = userValidator(req.body);
-        console.log(validate);
-        if  (validate.error)
+        if (validate.error) {
             return res.status(400).send(validate.error.message);
-         let hashedpassword = await bcrypt.hash(password, 10);
-         let newUser=new User({userName, password:hashedpassword, email} );
-         newUser.save();
-        let { _id, userName:u, role, email:e } = newUser;
+        }
+        // if (err.code === 11000 && err.keyPattern.email === 1) 
+        //     return res.status(400).send('כתובת האימייל כבר קיימת במערכת.');
+        //  if(err.code === 11000 && err.keyPattern.userName === 1) 
+        //  return res.status(400).send(' המשתמש כבר קיים במערכת.');  
+        let hashedPassword = await bcrypt.hash(password, 10);
+        let newUser = new User({ userName, password: hashedPassword, email });
+
+        await newUser.save();
+        let { _id, userName: u, role, email: e } = newUser;
         let token = generateToken(newUser);
-        res.json({ _id, userName:u, email:e,role, token });
+        res.json({ _id, userName: u, email: e, role, token });
     }
     catch (err) {
-        res.status(500).send("cannot add");
+            return res.status(500).send("לא ניתן להוסיף את המשתמש");
+        
     }
-}
-       
+} 
+ 

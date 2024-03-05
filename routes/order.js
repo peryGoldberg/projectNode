@@ -3,7 +3,7 @@ import * as  orderController from "../controllers/order.js";
 import { authAdmin, auth } from "../middlewares/auth.js";
 const router = express.Router();
 
-router.get("/", authAdmin, orderController.getAllorders);
+router.get("/",authAdmin, orderController.getAllorders);
 
 router.post("/", auth, orderController.addorder);
 

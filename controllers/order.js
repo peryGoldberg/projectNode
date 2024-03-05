@@ -16,7 +16,7 @@ export const addorder = async (req, res) => {
     try {     
         let newOrder = orderValidator(req.body);
         if (newOrder.error)
-            return res.status(400).send("invalid details");
+            return res.status(401).send("invalid details");
         newOrder = await Order.create(req.body);     
         res.json(newOrder);
     }         

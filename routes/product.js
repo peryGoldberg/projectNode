@@ -11,6 +11,8 @@ router.post("/",authAdmin,productController.addProduct);
 
 router.delete("/:id",authAdmin,productController.deleteProductById);
 
-router.put("/:id",authAdmin,productController.updateProductById);
+router.put("/:id",productController.updateProductById);
+
+router.get("/num/pages", productController.getNumOfPages);
 
 export default router;

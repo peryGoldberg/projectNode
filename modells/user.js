@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 import * as roleType from "./roleType.js"
 
 const userSchema = mongoose.Schema({
-    email: {type:String,required: true,unique: true} ,
+    email: {type:String,required: true} ,
     userName: { type: String, required: true },
-    password: {type:String,required:true,unique: true},
+    password: {type:String,required:true},
     role: {type:String ,default: roleType.USER},
     signUpDate : { type: Date, default: Date.now() },
 })

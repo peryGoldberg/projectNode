@@ -2,9 +2,9 @@ import Joi from "joi";
 import mongoose from "mongoose";
 
  const minimalProduct = mongoose.Schema({
-    productCode:String,
-    productName:{type: String, required: true },
-    qty:{type:Number,required: true }
+    productName:{type: String ,required:true},
+    qty:{type:Number,required:true},
+    sum:Number
  })
 
 const orderSchema = mongoose.Schema({
@@ -12,7 +12,7 @@ const orderSchema = mongoose.Schema({
     dueDate : { type: Date, default: Date.now() },    
     address: {type:String,required:true},
     userId: {type:String,required:true},
-    products:[minimalProduct],
+    products:{type:[minimalProduct]},
     isSetOff:{type:Boolean,default:false} 
 
 })
@@ -26,9 +26,10 @@ export const orderValidator = (_orderToValidate) => {
         address: Joi.string().required(),
         userId: Joi.string().required(),
         products: Joi.array().items(Joi.object({
-            productCode:Joi.string(),
             productName:Joi.string().required(),
-            qty:Joi.number().required()
+            qty:Joi.number().required(),
+            sum:Joi.number()
+
         })),
         isSetOff: Joi.boolean()
 
